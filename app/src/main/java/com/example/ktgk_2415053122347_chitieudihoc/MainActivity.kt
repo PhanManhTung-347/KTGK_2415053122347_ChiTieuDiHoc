@@ -1,5 +1,6 @@
 package com.example.ktgk_2415053122347_chitieudihoc
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,7 +14,7 @@ import com.example.ktgk_2415053122347_chitieudihoc.databinding.ActivityMainBindi
 class MainActivity : AppCompatActivity() {
     private lateinit var  binding_2347: ActivityMainBinding
     private val danhSachKhoanChi = mutableListOf<KhoanChi>()
-    private val khoanChiAdapter = KhoanChiAdapter(danhSachKhoanChi)
+    private val khoanChiAdapter = KhoanChiAdapter(danhSachKhoanChi,::moChiTietKhoanChi)
     private var idTiepTheo = 1L
     private val regexTen = Regex("""\p{L}[\p{L}\p{M}0-9 .'-]{1,39}""")
     val regexSoTien = Regex("""[1-9][0-9]{0,7}""")
@@ -76,5 +77,14 @@ class MainActivity : AppCompatActivity() {
         binding_2347.edtSoTien.text?.clear()
         binding_2347.edtGhiChu.text?.clear()
     }
-
+    private fun moChiTietKhoanChi(khoanChi: KhoanChi) {
+        val intentChiTiet = Intent(this, ChinhSuaKhoanChiActivity::class.java).apply {
+            putExtra("id", khoanChi.id)
+            putExtra("ten", khoanChi.ten)
+            putExtra("soTien", khoanChi.soTien)
+            putExtra("ghiChu", khoanChi.ghiChu)
+            putExtra("daThanhToan", khoanChi.daThanhToan)
+        }
+        startActivity(intentChiTiet)
+    }
 }
